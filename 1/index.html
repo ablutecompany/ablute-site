@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ablute_ - The Next Infrastructure of Health</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ablute': {
+              'cyan': '#06b6d4',
+              'dark': '#050505',
+              'darker': '#0a0a0a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background-color: #050505; color: #ffffff; }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+    
+    .fade-in { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    
+    .menu-overlay { display: none; }
+    .menu-overlay.active { display: flex; }
+  </style>
+</head>
+<body class="bg-[#050505]">
+  <!-- Navigation -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-20">
+        <a href="#" class="text-xl lg:text-2xl font-semibold tracking-tight text-white">
+          ablute<span class="text-cyan-400">_</span>
+        </a>
+        <button id="menuBtn" class="p-2 text-white hover:text-cyan-400 transition-colors z-50">
+          <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Menu Overlay -->
+  <div id="menuOverlay" class="menu-overlay fixed inset-0 z-40 bg-[#050505] flex-col justify-between px-6 py-24 lg:px-12">
+    <div class="flex-1 flex flex-col justify-center space-y-6">
+      <a href="#product" class="menu-link text-3xl lg:text-5xl font-light text-white hover:text-cyan-400 transition-colors">Product</a>
+      <a href="#company" class="menu-link text-3xl lg:text-5xl font-light text-white hover:text-cyan-400 transition-colors">Company</a>
+      <a href="#partnerships" class="menu-link text-3xl lg:text-5xl font-light text-white hover:text-cyan-400 transition-colors">Partnerships</a>
+      <a href="#contact" class="menu-link text-3xl lg:text-5xl font-light text-white hover:text-cyan-400 transition-colors">Contact</a>
+    </div>
+    <div class="space-y-6">
+      <div class="flex items-center space-x-3 text-slate-400">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+        <span>🇬🇧 English</span>
+      </div>
+      <button class="w-full flex items-center justify-center space-x-3 px-6 py-4 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        <span class="text-lg font-medium">Health Mode</span>
+      </button>
+      <div class="grid grid-cols-2 gap-4">
+        <a href="#product" class="menu-link flex items-center justify-center space-x-2 px-6 py-4 rounded-full bg-white text-[#050505] font-medium hover:bg-slate-200 transition-colors">
+          <span>Explore Product</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <button class="flex items-center justify-center space-x-2 px-6 py-4 rounded-full border border-slate-700 text-white hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          <span>Discover Health</span>
+        </button>
+      </div>
+      <a href="#contact" class="menu-link flex items-center justify-center space-x-2 text-slate-400 hover:text-white transition-colors">
+        <span>Request Partnership</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#050505]">
+    <div class="absolute inset-0">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[150px]"></div>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 pt-32 pb-20 text-center">
+      <p class="fade-in text-cyan-400 text-sm tracking-[0.2em] uppercase mb-6">Intelligent Sanitation Platform</p>
+      <h1 class="fade-in stagger-1 text-5xl sm:text-6xl lg:text-7xl font-light text-white leading-tight mb-6">
+        The Next<br>Infrastructure of<br><span class="text-cyan-400">Health</span>
+      </h1>
+      <p class="fade-in stagger-2 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-8">
+        Autonomous hygiene. Radical water efficiency. Health intelligence.
+      </p>
+      <div class="fade-in stagger-3 flex flex-wrap justify-center gap-6 mb-12">
+        <div class="flex items-center gap-2 text-slate-400"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg><span>100% autonomous cleaning</span></div>
+        <div class="flex items-center gap-2 text-slate-400"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg><span>Ultra-low water consumption</span></div>
+        <div class="flex items-center gap-2 text-slate-400"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg><span>Integrated sensing technology</span></div>
+        <div class="flex items-center gap-2 text-slate-400"><svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg><span>Future-ready health platform</span></div>
+      </div>
+      <div class="fade-in stagger-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#product" class="flex items-center gap-2 px-8 py-4 bg-white text-[#050505] rounded-full font-medium hover:bg-slate-200 transition-colors">
+          <span>Explore Product</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <button class="flex items-center gap-2 px-8 py-4 border border-slate-700 text-white rounded-full hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          <span>Discover Health Mode</span>
+        </button>
+      </div>
+    </div>
+    <div class="fade-in stagger-4 absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+      <span class="text-slate-500 text-sm uppercase tracking-widest">Scroll</span>
+      <div class="w-6 h-10 border-2 border-slate-600 rounded-full flex justify-center pt-2">
+        <div class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Company Section -->
+  <section id="company" class="py-24 lg:py-32 px-6 lg:px-8 bg-[#050505]">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-16">
+        <p class="text-cyan-400 text-sm tracking-[0.2em] uppercase mb-4">Company</p>
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-light text-white leading-tight">
+          Building the future of<br>intelligent infrastructure
+        </h2>
+      </div>
+      <div class="space-y-16">
+        <div class="flex gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+              <svg class="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-2xl font-medium text-white mb-4">Mission</h3>
+            <p class="text-slate-400 text-lg leading-relaxed">
+              Reinvent sanitation as an intelligent infrastructure. Transform the most essential room in every building into a platform for health, sustainability, and wellbeing.
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+              <svg class="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-2xl font-medium text-white mb-4">Vision</h3>
+            <p class="text-slate-400 text-lg leading-relaxed">
+              Transform everyday environments into intelligent health interfaces. Where every bathroom becomes a window into personal wellness.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-24 pt-16 border-t border-slate-800/50">
+        <p class="text-cyan-400 text-sm tracking-[0.2em] uppercase mb-6">Product Philosophy</p>
+        <blockquote class="text-3xl sm:text-4xl font-light text-white leading-relaxed">
+          "Reinventing sanitation through design, engineering and intelligence."
+        </blockquote>
+        <p class="mt-8 text-slate-400 text-lg leading-relaxed">
+          The ablute_ platform represents a fundamental shift in how we think about one of humanity's most essential daily rituals. By merging precision engineering with intelligent sensing, we're creating a new category of infrastructure that serves both personal health and planetary sustainability.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Health Intelligence Section -->
+  <section id="health" class="py-24 lg:py-32 px-6 lg:px-8 bg-[#0a0a0a]">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="text-cyan-400 text-sm tracking-[0.2em] uppercase mb-4">Health Intelligence</p>
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-light text-white leading-tight mb-6">
+          Your bathroom becomes<br>a health interface
+        </h2>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+          The ablute_ platform is designed to evolve. Through integrated sensing technology, it can become a continuous health monitoring system — non-invasive, effortless, and always present.
+        </p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 text-slate-300">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          <span>Biomarker analysis</span>
+        </div>
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 text-slate-300">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          <span>AI-assisted insights</span>
+        </div>
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 text-slate-300">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          <span>Preventive health</span>
+        </div>
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 text-slate-300">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span>Privacy-first design</span>
+        </div>
+      </div>
+      <div class="text-center mb-16">
+        <button class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          <span class="text-lg font-medium">Enter Health Mode</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </button>
+      </div>
+      <p class="text-center text-slate-500 text-sm">
+        Health Mode features are currently in development and pilot phases.
+      </p>
+    </div>
+  </section>
+
+  <!-- Sustainability Section -->
+  <section id="sustainability" class="py-24 lg:py-32 px-6 lg:px-8 bg-[#050505]">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-12">
+        <p class="text-cyan-400 text-sm tracking-[0.2em] uppercase mb-4">Sustainability</p>
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-light text-white leading-tight">
+          Radical water efficiency
+        </h2>
+      </div>
+      <p class="text-slate-400 text-lg leading-relaxed mb-16">
+        The ablute_ platform uses up to 87% less water than traditional toilets through precision engineering and intelligent flow control. Every drop is optimized, every flush is calculated.
+      </p>
+      <div class="grid grid-cols-2 gap-8 mb-16">
+        <div>
+          <div class="flex items-center gap-3 mb-2">
+            <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+            <span class="text-5xl sm:text-6xl font-light text-white">87%</span>
+          </div>
+          <p class="text-slate-400">less water used</p>
+        </div>
+        <div>
+          <div class="flex items-center gap-3 mb-2">
+            <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+            <span class="text-5xl sm:text-6xl font-light text-white">0.3L</span>
+          </div>
+          <p class="text-slate-400">per flush average</p>
+        </div>
+      </div>
+      <div class="bg-slate-900/50 rounded-3xl p-8 border border-slate-800">
+        <div class="flex items-center gap-3 mb-8">
+          <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          <span class="text-white font-medium">Water consumption comparison</span>
+        </div>
+        <div class="space-y-6">
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-slate-400">Traditional toilet</span>
+              <span class="text-slate-400">6-9L</span>
+            </div>
+            <div class="h-3 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full w-full bg-slate-600 rounded-full"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-slate-400">Efficient toilet</span>
+              <span class="text-slate-400">3-4L</span>
+            </div>
+            <div class="h-3 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full w-[50%] bg-slate-500 rounded-full"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-cyan-400 font-medium">ablute_</span>
+              <span class="text-cyan-400 font-medium">0.3L</span>
+            </div>
+            <div class="h-3 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full w-[5%] bg-cyan-400 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 pt-6 border-t border-slate-800">
+          <p class="text-slate-400 mb-2">Annual impact per unit</p>
+          <p class="text-3xl sm:text-4xl font-light text-white">
+            ~15,000L <span class="text-slate-500">of water saved</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design Section -->
+  <section id="design" class="py-24 lg:py-32 px-6 lg:px-8 bg-[#0a0a0a]">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-8">
+        <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-6">
+          <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        </div>
+        <h2 class="text-4xl sm:text-5xl font-medium text-white mb-6">Luxury Industrial Design</h2>
+        <p class="text-slate-400 text-lg leading-relaxed mb-16">
+          Architectural integration for modern bathrooms. Premium materials, precision craftsmanship, timeless aesthetics.
+        </p>
+        <p class="text-4xl sm:text-5xl font-light mb-16">
+          <span class="text-cyan-400">Seamless</span> <span class="text-slate-500">integration</span>
+        </p>
+      </div>
+      <div class="grid gap-6">
+        <div class="rounded-3xl overflow-hidden bg-slate-900">
+          <img src="images/product/real/1000123606.jpg" alt="ablute_ in bathroom" class="w-full h-auto object-cover">
+        </div>
+        <div class="grid grid-cols-2 gap-6">
+          <div class="rounded-3xl overflow-hidden bg-slate-900">
+            <img src="images/product/real/1000123607.jpg" alt="ablute_ design detail" class="w-full h-auto object-cover">
+          </div>
+          <div class="rounded-3xl overflow-hidden bg-slate-900">
+            <img src="images/product/real/1000123605.jpg" alt="ablute_ installation" class="w-full h-auto object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Innovations Section -->
+  <section id="innovations" class="py-24 lg:py-32 px-6 lg:px-8 bg-[#050505]">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-16">
+        <p class="text-cyan-400 text-sm tracking-[0.2em] uppercase mb-4">Core Innovations</p>
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-light text-white leading-tight mb-6">
+          Engineering excellence<br>in every detail
+        </h2>
+        <p class="text-slate-400 text-lg leading-relaxed">
+          Four pillars that define the ablute_ experience — each one pushing the boundaries of what's possible in sanitation technology.
+        </p>
+      </div>
+      <div class="mb-16">
+        <button class="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          <span>Download Technical Sheet</span>
+        </button>
+      </div>
+      <div class="space-y-16">
+        <div class="border-t border-slate-800 pt-8">
+          <div class="flex gap-6">
+            <div class="flex-shrink-0">
+              <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+                <svg class="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+              </div>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-2xl font-medium text-white mb-3">Autonomous Washing</h3>
+              <p class="text-slate-400 text-lg leading-relaxed">
+                Self-cleaning system that eliminates manual maintenance. Advanced sensors detect usage patterns and optimize cleaning cycles.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-slate-800 pt-8">
+          <div class="flex gap-6">
+            <div class="flex-shrink-0">
+              <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+                <svg class="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+              </div>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-2xl font-medium text-white mb-3">Precision Water Control</h3>
+              <p class="text-slate-400 text-lg leading-relaxed mb-4">
+                Adaptive flushing technology that uses exactly the amount of water needed — no more, no less. Real-time flow optimization.
+              </p>
+              <p class="text-3xl font-light text-cyan-400">
+                87% <span class="text-slate-500 text-xl">water reduction</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-slate-800 pt-8">
+          <div class="flex gap-6">
+            <div class="flex-shrink-0">
+              <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+                <svg class="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+              </div>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-2xl font-medium text-white mb-3">Modular Sensing</h3>
+              <p class="text-slate-400 text-lg leading-relaxed">
+                Expandable architecture designed to integrate future sensing capabilities. A platform that grows smarter over time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-16 pt-8 border-t border-slate-800">
+        <p class="text-4xl sm:text-5xl font-light mb-2">
+          <span class="text-cyan-400">Zero</span> <span class="text-slate-500">manual cleaning</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Section -->
+  <section id="technology" class="py-24 lg:py-32 px-6 lg:px-8 bg-[#0a0a0a]">
+    <div class="max-w-4xl mx-auto">
+      <div class="rounded-3xl overflow-hidden bg-slate-900 mb-12">
+        <img src="images/product/real/1000042880.jpg" alt="bioFET Sensor Technology" class="w-full h-auto object-cover">
+      </div>
+      <div class="mb-8">
+        <p class="text-slate-500 text-sm mb-2">bioFET Sensor Array</p>
+        <h2 class="text-4xl sm:text-5xl font-light">
+          <span class="text-white">Tecnologia</span> <span class="text-cyan-400">bioFET</span>
+        </h2>
+      </div>
+      <p class="text-slate-400 text-lg leading-relaxed mb-8">
+        Transistores de efeito de campo biológicos detectam alterações químicas na urina com precisão laboratorial. Cada sensor é calibrado para identificar biomarcadores específicos.
+      </p>
+      <div class="flex flex-wrap gap-3 mb-12">
+        <span class="px-4 py-2 rounded-full bg-slate-800/50 text-slate-300 text-sm border border-slate-700">Glucose</span>
+        <span class="px-4 py-2 rounded-full bg-slate-800/50 text-slate-300 text-sm border border-slate-700">Cetonas</span>
+        <span class="px-4 py-2 rounded-full bg-slate-800/50 text-slate-300 text-sm border border-slate-700">Proteínas</span>
+        <span class="px-4 py-2 rounded-full bg-slate-800/50 text-slate-300 text-sm border border-slate-700">pH</span>
+        <span class="px-4 py-2 rounded-full bg-slate-800/50 text-slate-300 text-sm border border-slate-700">Nitritos</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+          <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <div>
+          <p class="text-white font-medium">Análise em Tempo Real</p>
+          <p class="text-slate-500 text-sm">Monitorização contínua de parâmetros</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partnerships Section -->
+  <section id="partnerships" class="py-24 lg:py-32 px-6 lg:px-8 bg-[#050505]">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="text-slate-400 text-lg">
+          Collaborating with leaders in healthcare and technology
+        </p>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-16">
+        <div class="flex flex-col items-center p-8 rounded-3xl bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 transition-colors">
+          <div class="w-16 h-16 rounded-2xl bg-slate-800 flex items-center justify-center mb-4">
+            <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+          <span class="text-white text-center font-medium">Hospital da Luz</span>
+        </div>
+        <div class="flex flex-col items-center p-8 rounded-3xl bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 transition-colors">
+          <div class="w-16 h-16 rounded-2xl bg-slate-800 flex items-center justify-center mb-4">
+            <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <span class="text-white text-center font-medium">SNS Portugal</span>
+        </div>
+        <div class="flex flex-col items-center p-8 rounded-3xl bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 transition-colors">
+          <div class="w-16 h-16 rounded-2xl bg-slate-800 flex items-center justify-center mb-4">
+            <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          </div>
+          <span class="text-white text-center font-medium">INESC TEC</span>
+        </div>
+        <div class="flex flex-col items-center p-8 rounded-3xl bg-slate-900/50 border border-slate-800 hover:border-cyan-500/30 transition-colors">
+          <div class="w-16 h-16 rounded-2xl bg-slate-800 flex items-center justify-center mb-4">
+            <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+          </div>
+          <span class="text-white text-center font-medium">Universidade do Porto</span>
+        </div>
+      </div>
+      <div class="text-center">
+        <p class="text-slate-400 mb-4">Interested in a partnership?</p>
+        <a href="#contact" class="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors">
+          <span>Get in touch</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-16 px-6 lg:px-8 bg-[#050505] border-t border-slate-800/50">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+        <div>
+          <span class="text-2xl font-semibold text-white">
+            ablute<span class="text-cyan-400">_</span>
+          </span>
+          <p class="mt-2 text-slate-400">The Next Infrastructure of Health</p>
+        </div>
+        <div class="flex flex-wrap gap-6 text-slate-400">
+          <a href="#" class="hover:text-cyan-400 transition-colors">Privacy</a>
+          <a href="#" class="hover:text-cyan-400 transition-colors">Terms</a>
+          <a href="#" class="hover:text-cyan-400 transition-colors">Contact</a>
+        </div>
+      </div>
+      <div class="mt-8 pt-8 border-t border-slate-800/50 text-slate-500 text-sm">
+        © 2025 ablute_. All rights reserved. Made in Portugal.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuIcon = document.getElementById('menuIcon');
+    const closeIcon = document.getElementById('closeIcon');
+    const menuLinks = document.querySelectorAll('.menu-link');
+    
+    menuBtn.addEventListener('click', () => {
+      menuOverlay.classList.toggle('active');
+      menuIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
+      document.body.style.overflow = menuOverlay.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuOverlay.classList.remove('active');
+        menuIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        document.body.style.overflow = '';
+      });
+    });
+    
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-[#050505]/90', 'backdrop-blur-md');
+        navbar.classList.remove('bg-transparent');
+      } else {
+        navbar.classList.remove('bg-[#050505]/90', 'backdrop-blur-md');
+        navbar.classList.add('bg-transparent');
+      }
+    });
+  </script>
+</body>
+</html>
